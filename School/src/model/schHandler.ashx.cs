@@ -129,7 +129,7 @@ namespace School.src.model
                     grNumumers += "'" + item + "',";
                     qtext += "Insert into  sch_attendance (grNum,date,isActive,presentDays,absentDays) values ('" + item + "','" + indianTime.ToString("yyyy-MM-dd") + "',1,0,0) ; ";
                 }
-                qtext += " select 1 As Status; SELECT  sch_details.cont_num As 'mobile'  FROM sch_details where Gr_num in (" + grNumumers.Trim(',') + ")";
+                qtext += " select 1 As Status; SELECT  sch_details.cont_num As 'mobile', sch_details.name AS 'name'  FROM sch_details where Gr_num in (" + grNumumers.Trim(',') + ")";
 
                 MySqlParameter[] mySqlParameter = null;
 
@@ -142,12 +142,11 @@ namespace School.src.model
                     {
                         foreach (DataRow row in ds.Tables[1].Rows)
                         {
-                            mobiles += "+91" + row["mobile"] + ";";
+                            string message = "This is to inform you that today your child " + row["name"] + " is absent for school kindly send leave note.";//ConfigurationManager.AppSettings["absentSMS"].ToString();
+                            mobiles += "+91" + row["mobile"] ;
+                            SMS.SendSMS(mobiles, message);
                         }
-                        string message = ConfigurationManager.AppSettings["absentSMS"].ToString();
-
-                        SMS.SendSMS(mobiles, message);
-
+                        //string message = "This is to inform you that today your child ##Field## is absent for school kindly send leave note.";//ConfigurationManager.AppSettings["absentSMS"].ToString();
                     });
                     t.Start();//start parallel task
 

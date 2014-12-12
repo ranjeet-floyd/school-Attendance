@@ -70,9 +70,9 @@ namespace School
                 if (!string.IsNullOrEmpty(markAttFilter.Medium) && !string.IsNullOrEmpty(markAttFilter.Standard) && !string.IsNullOrEmpty(markAttFilter.Section))
                 {
                     string qtext = " SELECT  Name ,  Std ,  Medium ,  Section ,  Gr_num , Enroll  FROM user_sch ";
-                    qtext += " where Medium = @Medium AND Std =@Standard AND Section = @Section   Order by Name ";
+                    qtext += " where Medium = @Medium AND Std =@Standard AND Section = @Section  order by ifnull(`Roll_no`,`Gr_num`)  asc ";
                     qtext += " ;SELECT  count(Gr_num) as 'count'  FROM user_sch ";
-                    qtext += " where Medium = @Medium AND Std =@Standard AND Section = @Section";
+                    qtext += " where Medium = @Medium AND Std =@Standard AND Section = @Section ";
                     MySqlParameter[] mySqlParameter = new MySqlParameter[3];
                     mySqlParameter[0] = new MySqlParameter("@Medium", markAttFilter.Medium);
                     mySqlParameter[1] = new MySqlParameter("@Section", markAttFilter.Section);

@@ -31,6 +31,36 @@
             .navbar-brand {
                 font-size: 18px;
             }
+
+            #th_Standard, tr td:nth-child(3) {
+                display: none;
+                visibility: hidden;
+            }
+
+            #th_Medium, tr td:nth-child(4) {
+                display: none;
+                visibility: hidden;
+            }
+
+            #th_Section, tr td:nth-child(5) {
+                display: none;
+                visibility: hidden;
+            }
+            /*#btnApply {
+                margin-top:10px;
+            }*/
+        }
+
+        @media (max-width: 455px) {
+            #btnApply {
+                margin-top: 10px;
+                font-size: 17px;
+                /*float:right;*/
+            }
+
+            .gr-search {
+                margin-top: 30px;
+            }
         }
     </style>
 </head>
@@ -66,7 +96,7 @@
             <li><a href="Attendance.aspx"><i class="fa fa-dashboard fa-lg "></i><span>Attendance</span></a></li>
             <li><a href="ShowAtt.aspx"><i class="fa fa-edit fa-lg"></i><span>Show </span></a></li>
             <li class="active"><a href="Message.aspx"><i class="fa fa-signal fa-lg"></i><span>SMS</span></a></li>
-            <li style="width:105px;"><a href="UpdateRollNo.aspx"><i class="fa fa-user fa-lg"></i><span>Update Roll No.</span></a></li>
+            <li style="width: 105px;"><a href="UpdateRollNo.aspx"><i class="fa fa-user fa-lg"></i><span>Update Roll No.</span></a></li>
         </ul>
     </nav>
     <!-- / nav -->
@@ -128,13 +158,13 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Mobiles </label>
                                     <div class="col-lg-8">
-                                        <textarea id="txtAreaMobile" runat="server" placeholder="Enter , seperated Mobile  Numbers" rows="50" class="form-control parsley-validated"  style="height:100px;"></textarea>
+                                        <textarea id="txtAreaMobile" runat="server" placeholder="Enter , seperated Mobile  Numbers" rows="50" class="form-control parsley-validated" style="height: 100px;"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Message </label>
                                     <div class="col-lg-8">
-                                        <textarea id="txtAreaMessage" runat="server" placeholder="Enter  Message" rows="10" class="form-control parsley-validated" style="height:100px;"></textarea>
+                                        <textarea id="txtAreaMessage" runat="server" placeholder="Enter  Message" rows="10" class="form-control parsley-validated" style="height: 100px;"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

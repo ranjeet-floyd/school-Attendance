@@ -33,6 +33,36 @@
             .navbar-brand {
                 font-size: 18px;
             }
+
+            #th_Standard, tr td:nth-child(3) {
+                display: none;
+                visibility: hidden;
+            }
+
+            #th_Medium, tr td:nth-child(4) {
+                display: none;
+                visibility: hidden;
+            }
+
+            #th_Section, tr td:nth-child(5) {
+                display: none;
+                visibility: hidden;
+            }
+            /*#btnApply {
+                margin-top:10px;
+            }*/
+        }
+
+        @media (max-width: 455px) {
+            #btnApply {
+                margin-top: 10px;
+                font-size: 17px;
+                /*float:right;*/
+            }
+
+            .gr-search {
+                margin-top: 30px;
+            }
         }
     </style>
 </head>
@@ -66,7 +96,7 @@
             <li><a href="Attendance.aspx"><i class="fa fa-dashboard fa-lg "></i><span>Attendance</span></a></li>
             <li class="active"><a href="ShowAtt.aspx"><i class="fa fa-edit fa-lg"></i><span>Show </span></a></li>
             <li><a href="Message.aspx"><i class="fa fa-signal fa-lg"></i><span>SMS</span></a></li>
-            <li style="width:105px;"><a href="UpdateRollNo.aspx"><i class="fa fa-user fa-lg"></i><span>Update Roll No.</span></a></li>
+            <li style="width: 105px;"><a href="UpdateRollNo.aspx"><i class="fa fa-user fa-lg"></i><span>Update Roll No.</span></a></li>
         </ul>
     </nav>
     <!-- / nav -->
@@ -90,7 +120,7 @@
                                         </select>
                                         <select id="drpStandard" name="txt" class="input-sm inline form-control" style="width: 130px" runat="server" onchange="getSection()">
                                         </select>
-                                        <select id="drpSection" class="input-sm inline form-control" style="width: 130px" runat="server">
+                                        <select id="drpSection" class="input-sm inline form-control" style="width: 101px" runat="server">
                                         </select>
                                         <asp:Button Text="Apply" runat="server" ID='btnApply' class="btn btn-sm btn-primary" OnClick="btnApply_Click" OnClientClick="return applyFilter()" />
                                         <input id="hdndrpStandard" type="hidden" name="hdndrpStandard" runat="server" />
@@ -118,9 +148,9 @@
                                         <tr class="">
                                             <th class="">Name</th>
                                             <th class="">Gr </th>
-                                            <th class="">Standard</th>
-                                            <th class="">Medium</th>
-                                            <th class="">Section</th>
+                                              <th id="th_Standard">Standard</th>
+                                            <th id="th_Medium">Medium</th>
+                                            <th id="th_Section">Section</th>
                                             <th class="">&nbsp;</th>
                                         </tr>
                                 </HeaderTemplate>
