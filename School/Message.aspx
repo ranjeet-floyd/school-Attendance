@@ -11,21 +11,25 @@
     <link rel="stylesheet" href="/src/css/font.css">
     <link href="/src/css/app.v2.css" rel="stylesheet" />
     <!-- This is what you need -->
-    <script src="/src/js/sweet-alert.js"></script>
+    <script async src="/src/js/sweet-alert.js"></script>
     <link rel="stylesheet" href="/src/css/sweet-alert.css">
     <!--.......................-->
     <!--[if lt IE 9]> <script src="js/ie/respond.min.js"></script> <script src="js/ie/html5.js"></script> <![endif]-->
     <style>
         @media (min-width: 768px) {
-            .marginleft20 {
-                margin-left: 17%;
-            }
 
             .navbar-brand {
                 float: none;
                 display: block;
                 margin: 0;
                 text-align: center;
+            }
+        }
+
+        @media (max-width: 767px) {
+
+            .navbar-brand {
+                font-size: 18px;
             }
         }
     </style>
@@ -48,7 +52,7 @@
             </div>
         </div>
 
-        <a class="navbar-brand" style="line-height: 109%;" href="#">Thakur Vidya Mandir  High School</a>
+        <a class="navbar-brand" style="line-height: 109%;" href="#"><i class="fa  fa-book fa-lg"></i>Thakur Vidya Mandir  High School</a>
         <button type="button" class="btn btn-link pull-left nav-toggle visible-xs" data-toggle="class:slide-nav slide-nav-left" data-target="body"><i class="fa fa-bars fa-lg text-default"></i></button>
 
 
@@ -62,6 +66,7 @@
             <li><a href="Attendance.aspx"><i class="fa fa-dashboard fa-lg "></i><span>Attendance</span></a></li>
             <li><a href="ShowAtt.aspx"><i class="fa fa-edit fa-lg"></i><span>Show </span></a></li>
             <li class="active"><a href="Message.aspx"><i class="fa fa-signal fa-lg"></i><span>SMS</span></a></li>
+            <li style="width:105px;"><a href="UpdateRollNo.aspx"><i class="fa fa-user fa-lg"></i><span>Update Roll No.</span></a></li>
         </ul>
     </nav>
     <!-- / nav -->
@@ -123,13 +128,13 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Mobiles </label>
                                     <div class="col-lg-8">
-                                        <textarea id="txtAreaMobile" runat="server" placeholder="Enter , seperated Mobile  Numbers" rows="5" class="form-control parsley-validated" data-trigger="keyup" data-rangelength="[20,200]"></textarea>
+                                        <textarea id="txtAreaMobile" runat="server" placeholder="Enter , seperated Mobile  Numbers" rows="50" class="form-control parsley-validated"  style="height:100px;"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Message </label>
                                     <div class="col-lg-8">
-                                        <textarea id="txtAreaMessage" runat="server" placeholder="Enter  Message" rows="5" class="form-control parsley-validated" data-trigger="keyup" data-rangelength="[20,200]"></textarea>
+                                        <textarea id="txtAreaMessage" runat="server" placeholder="Enter  Message" rows="10" class="form-control parsley-validated" style="height:100px;"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -164,9 +169,9 @@
 
     <!-- app -->
     <script src="src/Js/app.v2.js"></script>
-    <script src="src/Js/fuelux.js"></script>
-    <script src="src/Js/jquery.dataTables.min.js"></script>
-    <script src="src/Js/underscore-min.js"></script>
+    <script async src="src/Js/fuelux.js"></script>
+    <script async src="src/Js/jquery.dataTables.min.js"></script>
+    <script async src="src/Js/underscore-min.js"></script>
     <script>
 
         function getMobileByGRNumber() {

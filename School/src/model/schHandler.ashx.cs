@@ -63,6 +63,9 @@ namespace School.src.model
                     case "GetMobileByGRNumber":
                         context.Response.Write(this.GetMobileByGRNumber(q));
                         break;
+                    case "UpdateRollno":
+                        context.Response.Write(this.UpdateRollno(q));
+                        break;
                     default:
                         context.Response.Write("Wrong Method");
                         break;
@@ -194,46 +197,92 @@ namespace School.src.model
 
         private bool SendSMS(NameValueCollection datas)
         {
-            //send sms
-            StringWriter mobilesData = new StringWriter();
-            StringWriter messageData = new StringWriter();
-            HttpUtility.HtmlDecode(datas["mobiles"], mobilesData);
-            HttpUtility.HtmlDecode(datas["message"], messageData);
-
-            string[] mobiles = mobilesData.ToString().Trim(',').Split(',');
-            string smsMobiles = "";
-            Task t = new Task(() =>
+            try
             {
-                foreach (string mobile in mobiles)
+                //send sms
+                StringWriter mobilesData = new StringWriter();
+                StringWriter messageData = new StringWriter();
+                HttpUtility.HtmlDecode(datas["mobiles"], mobilesData);
+                HttpUtility.HtmlDecode(datas["message"], messageData);
+
+                string[] mobiles = mobilesData.ToString().Trim(',').Split(',');
+                string smsMobiles = "";
+                Task t = new Task(() =>
                 {
-                    smsMobiles += "91" + mobile + ",";
-                }
+                    foreach (string mobile in mobiles)
+                    {
+                        smsMobiles += "91" + mobile + ",";
+                    }
 
-                SMS.SendSMS(smsMobiles, messageData.ToString());
+                    SMS.SendSMS(smsMobiles, messageData.ToString());
 
-            });
-            t.Start();//start parallel task
+                });
+                t.Start();//start parallel task
+            }
+            catch (Exception ex)
+            { }
             return true;
         }
 
         private string GetMobileByGRNumber(string q)
         {
             string mobile = "0";
-            if (!string.IsNullOrEmpty(q))
+            try
             {
-                string qtext = "SELECT  sch_details.cont_num As 'mobile'  FROM sch_details";
-                qtext += " where Gr_num = @Gr_num";
-                MySqlParameter[] mySqlParameter = new MySqlParameter[1];
-                mySqlParameter[0] = new MySqlParameter("@Gr_num", q.Trim());
-                DataSet ds = (new DataBase()).GetDataSet(qtext, mySqlParameter);
-                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                if (!string.IsNullOrEmpty(q))
                 {
-                    mobile = ds.Tables[0].Rows[0]["mobile"].ToString();
-                }
+                    string qtext = "SELECT  sch_details.cont_num As 'mobile'  FROM sch_details";
+                    qtext += " where Gr_num = @Gr_num";
+                    MySqlParameter[] mySqlParameter = new MySqlParameter[1];
+                    mySqlParameter[0] = new MySqlParameter("@Gr_num", q.Trim());
+                    DataSet ds = (new DataBase()).GetDataSet(qtext, mySqlParameter);
+                    if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        mobile = ds.Tables[0].Rows[0]["mobile"].ToString();
+                    }
 
+                }
             }
+            catch (Exception ex)
+            { }
             return mobile;
         }
+        //Added : Ranjeet | 12-Dec
+        private string UpdateRollno(string q)
+        {
 
+            string status = "0";
+            try
+            {
+                if (!string.IsNullOrEmpty(q))
+                {
+                    string qtext = string.Empty;
+                    string[] dataArr = q.Trim('_').Split('_');
+                    foreach (string item in dataArr)
+                    {
+                        string[] itemArr = item.Split('|');
+                        if (itemArr.Length == 2 && !string.IsNullOrEmpty(itemArr[0]) && !string.IsNullOrEmpty(itemArr[1]))
+                        {
+                            qtext += "Update user_sch set Roll_no=" + itemArr[1] + " ";
+                            qtext += " where Gr_num = '" + itemArr[0] + "';";
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(qtext))
+                    {
+                        qtext += " Select 1 As 'Status'";
+                        MySqlParameter[] mySqlParameter = null;//new MySqlParameter[1];
+                        //mySqlParameter[0] = new MySqlParameter("@Gr_num", q.Trim());
+                        DataSet ds = (new DataBase()).GetDataSet(qtext, mySqlParameter);
+                        if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                        {
+                            status = ds.Tables[0].Rows[0]["Status"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            { }
+            return status;
+        }
     }
 }

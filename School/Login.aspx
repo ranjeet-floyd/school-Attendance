@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="/src/css/font.css">
     <link href="/src/css/app.v2.css" rel="stylesheet" />
     <!-- This is what you need -->
-    <script src="/src/js/sweet-alert.js"></script>
+    <script async src="src/Js/jquery.js"></script>
+    <script async src="/src/js/sweet-alert.js"></script>
     <link rel="stylesheet" href="/src/css/sweet-alert.css">
     <!--.......................-->
     <!--[if lt IE 9]> <script src="js/ie/respond.min.js"></script> <script src="js/ie/html5.js"></script> <![endif]-->
@@ -35,6 +36,13 @@
 
         .margin-top {
             margin-top: 43px;
+        }
+
+        @media (max-width: 767px) {
+
+            .navbar-brand {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -68,14 +76,14 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-9 col-lg-offset-3">
-                                        <asp:Button Text="Login" runat="server" ID="btnLogin" class="btn btn-lg btn-primary " OnClick="btnLogin_Click" OnClientClick="return applyFilter()" />
+                                        <asp:Button Text="Login" runat="server" ID="btnLogin" class="btn btn-lg btn-primary " OnClick="btnLogin_Click" OnClientClick="wait()" />
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-9 col-lg-offset-3">
+                                        <div id="lblMesssage" class=" alert-warning" style="font-size: 16px;" runat="server"></div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-9 col-lg-offset-3">
-                                            <div id="lblMesssage" class=" alert-warning" style="font-size: 16px;" runat="server" ></div>
-                                        </div>
-                                    </div>
+                                </div>
                             </form>
                         </div>
                     </section>
@@ -96,3 +104,8 @@
 
 </body>
 </html>
+<script>
+    function wait()
+    { sweetAlert("Loading..."); }
+</script>
+

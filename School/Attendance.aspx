@@ -10,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/src/css/font.css">
     <link href="/src/css/app.v2.css" rel="stylesheet" />
-     <!-- This is what you need -->
-    <script src="/src/js/sweet-alert.js"></script>
+    <!-- This is what you need -->
+    <script async src="/src/js/sweet-alert.js"></script>
     <link rel="stylesheet" href="/src/css/sweet-alert.css">
     <!--.......................-->
-     <style>
+    <style>
         @media (min-width: 768px) {
 
             .navbar-brand {
@@ -24,11 +24,18 @@
                 text-align: center;
             }
         }
+
+        @media (max-width: 767px) {
+
+            .navbar-brand {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- header -->
-      <header id="header" class="navbar" style="min-height: 72px;">
+    <header id="header" class="navbar" style="min-height: 72px;">
         <div class="top-menu " id="menu_item">
             <div class="btn-group nav pull-right" style="margin-top: 15px;">
                 <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
@@ -44,7 +51,7 @@
             </div>
         </div>
 
-        <a class="navbar-brand" style="line-height: 109%;"  href="#">Thakur Vidya Mandir  High School</a>
+        <a class="navbar-brand" style="line-height: 109%;" href="#"><i class="fa  fa-book fa-lg"></i> Thakur Vidya Mandir  High School</a>
         <button type="button" class="btn btn-link pull-left nav-toggle visible-xs" data-toggle="class:slide-nav slide-nav-left" data-target="body"><i class="fa fa-bars fa-lg text-default"></i></button>
 
 
@@ -57,6 +64,7 @@
             <li class="active"><a href="Attendance.aspx"><i class="fa fa-dashboard fa-lg "></i><span>Attendance</span></a></li>
             <li><a href="ShowAtt.aspx"><i class="fa fa-edit fa-lg"></i><span>Show </span></a></li>
             <li><a href="Message.aspx"><i class="fa fa-signal fa-lg"></i><span>SMS</span></a></li>
+            <li style="width:105px;"><a href="UpdateRollNo.aspx"><i class="fa fa-user fa-lg"></i><span>Update Roll No.</span></a></li>
         </ul>
     </nav>
     <!-- / nav -->
@@ -90,8 +98,8 @@
                                     </div>
 
                                     <div class="col-lg-3 right">
-                                        <div class="input-group" style="max-width:200px; margin-top:10px;">
-                                            <input type="text" id="txtGrNumber" class="input-sm form-control"  placeholder="Search by GR number" runat="server">
+                                        <div class="input-group" style="max-width: 200px; margin-top: 10px;">
+                                            <input type="text" id="txtGrNumber" class="input-sm form-control" placeholder="Search by GR number" runat="server">
                                             <span class="input-group-btn">
                                                 <asp:Button Text="Go" runat="server" class="btn btn-sm btn-primary" ID="btnSearchGr" OnClick="btnSearchGr_Click" OnClientClick="return grSearch()" />
                                             </span>
@@ -142,8 +150,9 @@
         </section>
     </section>
     <!-- footer -->
+    <!-- footer -->
     <footer id="footer">
-        <div class=" padder clearfix">
+        <div class="text-center padder clearfix">
             <p>
                 <small>© BitBlue 2014 </small>
                 <br>
@@ -151,41 +160,57 @@
         </div>
     </footer>
     <!-- / footer -->
+    <!-- / footer -->
 
     <!-- app -->
     <script src="src/Js/app.v2.js"></script>
-    <script src="src/Js/fuelux.js"></script>
-    <script src="src/Js/jquery.dataTables.min.js"></script>
-    <script src="src/Js/underscore-min.js"></script>
+    <script async src="src/Js/fuelux.js"></script>
+    <script async src="src/Js/jquery.dataTables.min.js"></script>
+    <script async src="src/Js/underscore-min.js"></script>
     <script>
         //global variables to store gr numbers
         var GR_NUMS = [];
         $(document).ready(function () {
-            //set filter values after submit
-            if ($("#hdndrpStandard").val() != "") {
-                $drpStandard = $("#drpStandard");
-                $drpSection = $("#drpSection")
-                $drpStandard.html($("#hdndrpStandard").val());
-                $drpSection.html($("#hdndrpSection").val());
-                $drpSection.val($("#hdnelectedDrpSection").val());
-                $drpStandard.val($("#hdnSelectedDrpStandard").val());
+            try {
+                //set filter values after submit
+                if ($("#hdndrpStandard").val() != "") {
+                    $drpStandard = $("#drpStandard");
+                    $drpSection = $("#drpSection")
+                    $drpStandard.html($("#hdndrpStandard").val());
+                    $drpSection.html($("#hdndrpSection").val());
+                    $drpSection.val($("#hdnelectedDrpSection").val());
+                    $drpStandard.val($("#hdnSelectedDrpStandard").val());
+                }
             }
+            catch (ex) { console.log(ex.message); }
         });
 
 
         function submitAttendance() {
+            swal({
+                title: "Are you sure for Update?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Update!",
+                closeOnConfirm: false
+            },
+        function () {
             var qData = "";
             //$(".attendance").each(function (obj) { console.log(this.id) });
             $(".attendance").each(function (obj) {
                 if (!$(this).hasClass("active"))
                     qData += this.id + "_";
             });
-            if (qData.length > 0)
+            if (qData.length > 0) {
+                sweetAlert("Please wait...");
                 callHandler("SubmitAttendance", qData, submitAttendanceCallBack);
+            }
             else
-                sweetAlert("Select options.");
-                //alert("No Data.");
-
+                sweetAlert("Please mark at least one attendance...");
+            //alert("No Data.");
+        });
         }
         //retrun on submit attendance
         function submitAttendanceCallBack(res) {
@@ -197,7 +222,8 @@
                     //alert("Successfully saved.");
                     //window.location.reload(true);
                 }
-                else { sweetAlert("Some error!!"); console.log(status) }
+
+                else { sweetAlert("Some error!!"); console.log(res) }
             }
             catch (ex) { console.log(ex.message) }
         }
